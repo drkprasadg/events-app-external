@@ -76,9 +76,7 @@ app.get('/', (req, res) => {
                     }); // pass the data from the server to the template
             }
         });
-
 });
-
 
 // defines a route that receives the post request to /event
 app.post('/event',
@@ -99,16 +97,12 @@ app.post('/event',
                 },
                 json: true // response from server will be json format
             },
-            (error, response, body) => {  // third argument: function with three args,
-                // runs when server response received
-                // body hold the return from the server
-                console.log('error:', error); // Print the error if one occurred
-                console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-                console.log(body); // print the return from the server microservice
-                res.redirect("/"); // redirect to the home page
+            () => {  
+                res.redirect("/"); // redirect to the home page on successful response
             });
 
     });
+
 
 // defines a route that receives the post request to /event/like to like the event
 app.post('/event/like',
@@ -120,7 +114,8 @@ app.post('/event/like',
         // using an environment variable. Here, the variable is passed 
         // to npm start inside package.json:
         //  "start": "BACKEND_URL=http://localhost:8082 node server.js",
-        request.post(  // first argument: url + data + formats
+        // changed to a put now that real data is being updated
+        request.put(  // first argument: url + data + formats
             {
                 url: SERVER + '/event/like',  // the microservice end point for liking an event
                 body: req.body,  // content of the form
@@ -162,6 +157,7 @@ app.post('/event/unlike',
     });    
 
 // create other get and post methods here - version, login,  etc
+
 
 
 
